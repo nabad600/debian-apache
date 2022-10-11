@@ -1,0 +1,19 @@
+version: "3"
+services:
+  apache:
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile'
+      args:
+        - 'SERVER_ROOT=${SERVER_ROOT}'
+        - 'USER_ID=${USER_ID}'
+        - 'GROUP_ID=${GROUP_ID}'
+        - 'PHP_VERSION=${PHP_VERSION}'
+        - 'DISPLAY_PHPERROR=${DISPLAY_PHPERROR}'
+        - 'XDEBUG=${XDEBUG}'
+        - 'INSTALL_ADDITIONAL_EXTENSIONS=${INSTALL_ADDITIONAL_EXTENSIONS}'
+    volumes:
+      - '${APP_CODE_PATH_HOST}:${APP_CODE_PATH_APACHE}${APP_CODE_CONTAINER_FLAG}'
+    ports:
+      - '${APACHE_HOST_HTTP_PORT}:80'
+volumes: {}
