@@ -35,6 +35,13 @@ RUN apt-get update && \
         php7.4-mongodb \
         git \
         sudo 
+# Addisonal PHP package install 
+    # ARG INSTALL_ADDITIONAL_EXTENSIONS
+    # RUN if [ -z "$INSTALL_ADDITIONAL_EXTENSIONS" ] ; then \
+    # echo "Nothing to change." \
+    # ;else \
+    # apt install -y ${INSTALL_ADDITIONAL_EXTENSIONS} \
+    # ;fi
 # Ensure apache can bind to 80 as non-root
     RUN apt install -y libcap2-bin procps
     RUN setcap 'cap_net_bind_service=+ep' /usr/sbin/apache2ctl 
@@ -43,7 +50,7 @@ RUN apt-get update && \
     ARG USER_ID
     ARG GROUP_ID
     RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
-    
+
 # As apache is never run as root, change dir ownership
     RUN chown -R www-data:www-data /usr/sbin/apache2
     RUN chown -R www-data:www-data /var/log/apache2
@@ -71,7 +78,7 @@ COPY src/99-local.ini     /etc/php/7.4/apache2/conf.d
 # Install XDEBUG
     ARG XDEBUG
     RUN if [ ${XDEBUG} = true ]; then \
-    apt update && apt install php-xdebug \
+    apt update && apt install -y php7.4-xdebug \
     && echo "zend_extension=xdebug" >> /etc/php/7.4/apache2/conf.d/99-local.ini \
     ;fi
 RUN echo "extension=mongodb.so" >>  /etc/php/7.4/apache2/conf.d/99-local.ini
