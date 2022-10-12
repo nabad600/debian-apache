@@ -42,14 +42,16 @@ RUN apt-get update && \
     # ;else \
     # apt install -y ${INSTALL_ADDITIONAL_EXTENSIONS} \
     # ;fi
+
+
 # Ensure apache can bind to 80 as non-root
     RUN apt install -y libcap2-bin procps
     RUN setcap 'cap_net_bind_service=+ep' /usr/sbin/apache2ctl 
 
 # UID and GID change
-    ARG USER_ID
-    ARG GROUP_ID
-    RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
+    # ARG USER_ID
+    # ARG GROUP_ID
+    # RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
 
 # As apache is never run as root, change dir ownership
     RUN chown -R www-data:www-data /usr/sbin/apache2
