@@ -2,10 +2,10 @@ name: Publish Docker Image
 
 on:
   push:
-    branches: [ php74 ]
+    branches: [ php80 ]
 env:
   IMAGE_NAME: apache
-  VERSION: v7.4
+  VERSION: v8.0
 jobs:
   buildImage:
     name: Build Docker Image
@@ -28,4 +28,4 @@ jobs:
 
       - uses: actions/checkout@v2
       - name: Build Container image
-        run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/nabad600/debian-apache:v7.4 . --push
+        run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/nabad600/debian-apache:v8.0 . --push
