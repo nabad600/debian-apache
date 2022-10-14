@@ -135,9 +135,9 @@ RUN \
   apt-get -q autoclean && \
   rm -rf /var/lib/apt/lists/*
 # UID and GID change
-  ARG USER_ID
-  ARG GROUP_ID
-  RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
+  #ARG USER_ID
+  #ARG GROUP_ID
+  #RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
 # Setup apache
   RUN a2enmod rewrite && \
   a2enmod headers
